@@ -1,4 +1,4 @@
-FROM federatedwiki/node:latest
+FROM federatedwiki/node:0.9.3
 
 RUN npm install -g grunt
 

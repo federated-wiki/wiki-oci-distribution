@@ -14,7 +14,11 @@ RUN npm i \
     wiki-plugin-slide@0.1.2 \
     wiki-plugin-frame@0.2.0 \
     wiki-plugin-zones@0.1.8 \
-    wiki-plugin-register@0.1.6 \
-    wiki-plugin-print@0.0.2
+    wiki-plugin-register@0.1.7 \
+    wiki-plugin-print@0.0.2 \
+    wiki-plugin-signature@0.1.2 \
+    wiki-plugin-soundcloud@0.1.0 \
+    wiki-plugin-metamodel@0.0.5 \
+    wiki-plugin-linkmap@0.2.2
 
 WORKDIR /root/.wiki/

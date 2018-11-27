@@ -1,4 +1,4 @@
-FROM federatedwiki/base:0.14
+FROM federatedwiki/base:0.15
 
 WORKDIR /usr/local/lib/node_modules/wiki/
 RUN npm i \
@@ -7,7 +7,7 @@ RUN npm i \
     wiki-plugin-rostermatic@1.0.10 \
     wiki-plugin-tab@0.1.1 \
     wiki-plugin-fivestar@0.2.6 \
-    wiki-plugin-json@0.1.9 \
+    wiki-plugin-json@0.1.10 \
     wiki-plugin-rss@0.1.19 \
     wiki-plugin-tally@0.1.4 \
     wiki-plugin-shell@0.1.3 \

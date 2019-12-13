@@ -1,4 +1,5 @@
-FROM federatedwiki/base:0.14
+FROM federatedwiki/base:0.16.1
+RUN apk add --update git && rm -rf /var/cache/apk/*
 
 WORKDIR /usr/local/lib/node_modules/wiki/
 RUN npm i \

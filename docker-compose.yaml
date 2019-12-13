@@ -1,7 +1,7 @@
 version: '2'
 services:
-    wiki:
-        image: federatedwiki/distribution:latest
-        command: ["wiki"]
-        volumes: ["./.wiki/:/root/.wiki/:z"]
-        ports: ["3000:3000"]
+  wiki:
+    image: federatedwiki/distribution:latest
+    command: ["wiki"]
+    volumes: ["./.wiki/:/root/.wiki/:z"]
+    ports: ["3000:3000"]

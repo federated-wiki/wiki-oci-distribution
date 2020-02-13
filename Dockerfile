@@ -1,4 +1,4 @@
-FROM federatedwiki/base:0.20.0
+FROM federatedwiki/base:0.21.0
 RUN apk add --update bash git && rm -rf /var/cache/apk/*
 
 WORKDIR /usr/local/lib/node_modules/wiki/
@@ -24,3 +24,4 @@ RUN npm i \
     wiki-plugin-linkmap
 
 WORKDIR /root/.wiki/
+

@@ -20,8 +20,7 @@ RUN npm i \
     wiki-plugin-print \
     wiki-plugin-signature \
     wiki-plugin-soundcloud \
-    wiki-plugin-metamodel \
-    wiki-plugin-linkmap
+    wiki-plugin-metamodel
 
 WORKDIR /root/.wiki/
 

@@ -4,7 +4,6 @@ RUN apk add --update bash git && rm -rf /var/cache/apk/*
 WORKDIR /usr/local/lib/node_modules/wiki/
 # no need to repeat https://github.com/fedwiki/wiki/blob/master/package.json
 RUN npm i \
-    wiki-server@0.17.2 \
     wiki-plugin-graph \
     wiki-plugin-cytodemo \
     wiki-plugin-rostermatic \

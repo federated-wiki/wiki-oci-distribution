@@ -1,5 +1,4 @@
-FROM federatedwiki/base:0.21.1
-RUN apk add --update bash git && rm -rf /var/cache/apk/*
+FROM federatedwiki/base
 
 WORKDIR /usr/local/lib/node_modules/wiki/
 # no need to repeat https://github.com/fedwiki/wiki/blob/master/package.json

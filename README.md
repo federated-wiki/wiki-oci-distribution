@@ -69,7 +69,7 @@ The federated wiki image can be run with container runtimes that support Docker 
 For example with Docker:
 
 ```
-docker start -v "./wiki/:/root/.wiki/:z" -p "3000:3000" -e NODE_ENV=production federatedwiki/base wiki
+docker run -v "${PWD}/wiki/:/root/.wiki/:z" -p "3000:3000" -e NODE_ENV=production federatedwiki/base wiki
 ```
 
 Or to launch an example orchestrated with Docker Compose:

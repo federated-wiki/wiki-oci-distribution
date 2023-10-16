@@ -1,5 +1,6 @@
-FROM federatedwiki/base
+FROM ghcr.io/federated-wiki/base
 
+USER root
 WORKDIR /usr/local/lib/node_modules/wiki/
 # no need to repeat https://github.com/fedwiki/wiki/blob/master/package.json
 RUN npm i \
@@ -21,4 +22,5 @@ RUN npm i \
     wiki-plugin-tally \
     wiki-plugin-zones
 
-WORKDIR /root/.wiki/
+USER node
+WORKDIR /home/node/

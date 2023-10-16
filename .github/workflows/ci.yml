@@ -9,6 +9,10 @@ on:
         required: false
         type: string
 
+permissions:
+  contents: read
+  packages: write
+
 jobs:
   call-build-and-push:
     name: Call image build

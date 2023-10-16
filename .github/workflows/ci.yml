@@ -9,6 +9,9 @@ on:
         required: false
         type: string
 
+env:
+  image-name: distribution
+
 permissions:
   contents: read
   packages: write
@@ -20,13 +23,13 @@ jobs:
     uses: federated-wiki/workflows/.github/workflows/build-and-push.yml@main
     if: ( inputs.ref == 0 )
     with:
-      image-name: "base"
+      image-name: $image-name
     secrets: inherit
   call-build-and-push-ref:
     name: Call tagged image build
     uses: federated-wiki/workflows/.github/workflows/build-and-push.yml@main
     if: ( inputs.ref != 0 )
     with:
-      image-name: "base"
+      image-name: $image-name
       ref: ${{ inputs.ref }}
     secrets: inherit

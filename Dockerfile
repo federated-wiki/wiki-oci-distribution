@@ -4,7 +4,6 @@ USER root
 WORKDIR /usr/local/lib/node_modules/wiki/
 # no need to repeat https://github.com/fedwiki/wiki/blob/master/package.json
 RUN npm i \
-    wiki-plugin-cytodemo \
     wiki-plugin-fivestar \
     wiki-plugin-frame \
     wiki-plugin-graph \

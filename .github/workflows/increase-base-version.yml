@@ -1,0 +1,63 @@
+name: Increase base version
+
+on:
+  workflow_dispatch:
+    inputs:
+      previous-version:
+        required: true
+        type: string
+      next-version:
+        required: true
+        type: string
+
+permissions:
+  pull-requests: write
+  packages: write
+  contents: write
+  id-token: write
+
+jobs:
+  increase-version:
+    name: Increase version of base image
+    runs-on: ubuntu-latest
+    outputs:
+      pull-request-number: ${{ steps.pr.outputs.pull-request-number }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Upgrade version number
+        run: |
+          echo Increase version number from ${{ inputs.previous-version }} to ${{ inputs.next-version }}
+          sed 's/${{ inputs.previous-version }}/${{ inputs.next-version }}/' -i Dockerfile
+      - name: Create Pull Request, if needed
+        id: pr
+        if: ${{ inputs.previous-version != inputs.next-version }}
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: Increase version ${{ inputs.previous-version }} to ${{ inputs.next-version }}
+          committer: GitHub <noreply@github.com>
+          author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+          signoff: false
+          branch: upgrade/${{ inputs.next-version }}
+          delete-branch: true
+          draft: false
+          title: Increase version ${{ inputs.previous-version }} to ${{ inputs.next-version }}
+          body: |
+            A new wiki version ${{ inputs.next-version }} was found.
+
+            Here we are updating from our old version ${{ inputs.previous-version }}.
+      - name: Merge Pull Request, if needed
+        if: ${{ steps.pr.outputs.pull-request-number }} != ''
+        run: |
+          gh pr merge --merge --auto "$PR"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR: ${{ steps.pr.outputs.pull-request-number }}
+
+  call-release:
+    name: Call version change detection workflow
+    needs: ['increase-version']
+    if: needs.increase-version.outputs.pull-request-number != ''
+    uses: ./.github/workflows/release-increased-version.yml
+    secrets: inherit

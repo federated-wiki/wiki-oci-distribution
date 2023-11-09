@@ -1,4 +1,4 @@
-FROM ghcr.io/federated-wiki/base:0.31.0-3
+FROM ghcr.io/federated-wiki/base:0.32.1
 
 USER root
 WORKDIR /usr/local/lib/node_modules/wiki/

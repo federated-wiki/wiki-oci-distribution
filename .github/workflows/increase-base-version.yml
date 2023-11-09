@@ -9,6 +9,14 @@ on:
       next-version:
         required: true
         type: string
+  workflow_call:
+    inputs:
+      previous-version:
+        required: true
+        type: string
+      next-version:
+        required: true
+        type: string
 
 permissions:
   pull-requests: write

@@ -1,0 +1,60 @@
+name: Detect, tag and release a new version
+
+on:
+  push:
+    branches:
+      - 'main'
+  workflow_call:
+    inputs:
+      ref:
+        required: false
+        type: string
+        default: ${{ github.ref }}
+
+permissions:
+  pull-requests: write
+  packages: write
+  contents: write
+  id-token: write
+
+jobs:
+  tag-release:
+    name: Tag and release a new new version
+    runs-on: ubuntu-latest
+
+    outputs:
+      previous-version: ${{ steps.check-version.outputs.previous-version }}
+      current-version: ${{ steps.check-version.outputs.current-version }}
+
+    steps:
+
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+          ref: ${{ inputs.ref }}
+
+      - name: Detect and tag new version
+        uses: salsify/action-detect-and-tag-new-version@v2
+        id: check-version
+        with:
+          version-command: |
+            grep WIKI_TAG= Dockerfile | cut -d"=" -f2
+
+      - name: Release new tag
+        uses: ncipollo/release-action@v1
+        if: steps.check-version.outputs.previous-version != steps.check-version.outputs.current-version
+        with:
+          allowUpdates: true
+          generateReleaseNotes: true
+          tag: ${{ steps.check-version.outputs.tag }}
+          updateOnlyUnreleased: true
+
+  call-build-push:
+    name: Build tagged Container image
+    needs: ['tag-release']
+    uses: ./.github/workflows/ci.yml
+    if: needs.tag-release.outputs.previous-version != needs.tag-release.outputs.current-version
+    with:
+      ref: "refs/tags/v${{ needs.tag-release.outputs.current-version }}"
+    secrets: inherit

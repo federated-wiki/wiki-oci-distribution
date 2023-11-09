@@ -9,6 +9,15 @@ on:
       next-version:
         required: true
         type: string
+      repository:
+        required: false
+        type: string
+        default: federated-wiki/wiki-docker-plugins
+      ref:
+        required: false
+        type: string
+        default: main
+
   workflow_call:
     inputs:
       previous-version:
@@ -17,6 +26,14 @@ on:
       next-version:
         required: true
         type: string
+      repository:
+        required: false
+        type: string
+        default: federated-wiki/wiki-docker-plugins
+      ref:
+        required: false
+        type: string
+        default: main
 
 permissions:
   pull-requests: write
@@ -32,6 +49,9 @@ jobs:
       pull-request-number: ${{ steps.pr.outputs.pull-request-number }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          repository: ${{ inputs.repository }}
+          ref: ${{ inputs.ref }}
 
       - name: Upgrade version number
         run: |
@@ -68,4 +88,7 @@ jobs:
     needs: ['increase-version']
     if: needs.increase-version.outputs.pull-request-number != ''
     uses: ./.github/workflows/release-increased-version.yml
+    with:
+      ref: ${{ inputs.ref }}
+      repository: ${{ inputs.repository }}
     secrets: inherit

@@ -43,7 +43,7 @@ permissions:
 
 jobs:
   increase-version:
-    name: Increase version of base image
+    name: Increase base version from ${{ inputs.previous-version }} to ${{ inputs.next-version }}
     runs-on: ubuntu-latest
     outputs:
       pull-request-number: ${{ steps.pr.outputs.pull-request-number }}
